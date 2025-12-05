@@ -24,6 +24,10 @@ app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/chat', require('./routes/chat'));
 app.use('/api/storage', require('./routes/storage'));
 
+app.use('/ping', (req, res) => {
+  res.send('pong');
+});
+
 app.get('/', (req, res) => {
   res.json({ message: 'Condo Market backend (stub mode). Configure MySQL to enable full functionality.' });
 });
