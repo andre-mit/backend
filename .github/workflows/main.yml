@@ -1,0 +1,21 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Coolify Deployment
+        run: |
+          curl -f -v --request GET "${{ secrets.COOLIFY_WEBHOOK_URL }}&force=true&sha=${{ github.sha }}'" \
+               --header "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+        env:
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
